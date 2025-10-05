@@ -1,0 +1,35 @@
+[gd_scene load_steps=6 format=3 uid="uid://7t5rseg582mi"]
+
+[ext_resource type="Script" uid="uid://nehsg4vy11dp" path="res://coins/library/coin.gd" id="1_d5gmh"]
+[ext_resource type="Texture2D" uid="uid://ky1rcvebs606" path="res://coins/fonts/digits_sdf.png" id="2_0t63x"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_h2yge"]
+friction = 0.75
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_7dm0k"]
+top_radius = 0.013
+bottom_radius = 0.013
+height = 0.002
+rings = 2
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_7dm0k"]
+height = 0.002
+radius = 0.013
+
+[node name="Coin" type="RigidBody3D" groups=["coin"]]
+collision_layer = 4
+collision_mask = 5
+mass = 0.01
+physics_material_override = SubResource("PhysicsMaterial_h2yge")
+continuous_cd = true
+linear_damp = 0.3
+angular_damp = 0.4
+script = ExtResource("1_d5gmh")
+digits_sdf = ExtResource("2_0t63x")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CylinderMesh_7dm0k")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CylinderShape3D_7dm0k")

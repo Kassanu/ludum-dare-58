@@ -1,0 +1,11 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://6o562mhnrccp"]
+
+[resource]
+transparency = 1
+cull_mode = 1
+albedo_color = Color(1, 1, 1, 0.774)
+metallic_specular = 0.55
+roughness = 0.06
+clearcoat_enabled = true
+clearcoat_roughness = 0.03
+refraction_enabled = true

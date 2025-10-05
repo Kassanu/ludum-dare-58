@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="CoinLibrary" load_steps=9 format=3 uid="uid://lo8uc52tn3wf"]
+
+[ext_resource type="Script" uid="uid://cgv0tkikdgbgj" path="res://coins/library/CoinLibrary.gd" id="1_jf5c1"]
+[ext_resource type="Script" uid="uid://x8h82dc6ad4m" path="res://coins/library/CoinType.gd" id="2_g50x8"]
+[ext_resource type="Resource" uid="uid://dk0v1vndneoqd" path="res://coins/library/types/dime.tres" id="3_irypy"]
+[ext_resource type="Resource" uid="uid://c4m74vnumdivs" path="res://coins/library/types/quarter.tres" id="4_fc7s6"]
+[ext_resource type="Resource" uid="uid://cjjgy2pe0eb7b" path="res://coins/library/types/penny.tres" id="5_n22ef"]
+[ext_resource type="Resource" uid="uid://ddy3fdeau1t5n" path="res://coins/library/types/nickel.tres" id="6_wo76v"]
+[ext_resource type="Resource" uid="uid://cs3ewhxi65khi" path="res://coins/library/types/half_dollar.tres" id="7_yj6y3"]
+[ext_resource type="Resource" uid="uid://bsu6dunnbahny" path="res://coins/library/types/dollar.tres" id="8_ugeoq"]
+
+[resource]
+script = ExtResource("1_jf5c1")
+types = Array[ExtResource("2_g50x8")]([ExtResource("3_irypy"), ExtResource("4_fc7s6"), ExtResource("5_n22ef"), ExtResource("6_wo76v"), ExtResource("7_yj6y3"), ExtResource("8_ugeoq")])
+metadata/_custom_type_script = "uid://cgv0tkikdgbgj"

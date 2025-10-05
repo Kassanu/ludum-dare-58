@@ -1,0 +1,40 @@
+[gd_resource type="Resource" script_class="CoinType" load_steps=4 format=3 uid="uid://ddy3fdeau1t5n"]
+
+[ext_resource type="Script" uid="uid://x8h82dc6ad4m" path="res://coins/library/CoinType.gd" id="1_40bv3"]
+[ext_resource type="Script" uid="uid://dq0pm66opl7xm" path="res://coins/library/CoinVariant.gd" id="2_f5m1s"]
+
+[sub_resource type="Resource" id="Resource_40bv3"]
+script = ExtResource("2_f5m1s")
+id = &"regular"
+display_name = "Regular"
+spawn_weight = 1.0
+years_exact = null
+years_ranges = Array[Vector2i]([])
+faces_by_year = {}
+override_rim_color = false
+rim_color_override = Color(1, 1, 1, 1)
+override_metallic = false
+metallic_override = 0.9
+override_roughness = false
+roughness_override = 0.35
+override_wear = false
+wear_override = 0.35
+metadata/_custom_type_script = "uid://dq0pm66opl7xm"
+
+[resource]
+script = ExtResource("1_40bv3")
+id = 1
+display_name = "Nickel"
+visual_diameter_m = 0.026
+visual_thickness_m = 0.003
+collider_thickness_m = 0.006
+value_points = 2
+year_min = 1990
+year_max = 2025
+rim_color = Color(0.83, 0.85, 0.87, 1)
+metallic = 0.9
+roughness = 0.38
+wear_default = 0.4
+type_weight = 1.0
+variants = Array[ExtResource("2_f5m1s")]([SubResource("Resource_40bv3")])
+metadata/_custom_type_script = "uid://x8h82dc6ad4m"

@@ -1,0 +1,39 @@
+[gd_scene load_steps=5 format=3 uid="uid://cgu0ydp2ivld2"]
+
+[ext_resource type="Script" uid="uid://bif3ejgcrix2s" path="res://JarBank.gd" id="1_8fgap"]
+[ext_resource type="Material" uid="uid://6o562mhnrccp" path="res://inner_glass.tres" id="2_amr17"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_efxa6"]
+material = ExtResource("2_amr17")
+cap_top = false
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_dg77c"]
+
+[node name="SingleTypeBank" type="Node3D" groups=["bank"]]
+script = ExtResource("1_8fgap")
+label_path = NodePath("Label3D")
+
+[node name="Visual" type="Node3D" parent="."]
+transform = Transform3D(0.25, 0, 0, 0, 0.2, 0, 0, 0, 0.25, 0, 0, 0)
+
+[node name="OuterGlass" type="MeshInstance3D" parent="Visual"]
+mesh = SubResource("CylinderMesh_efxa6")
+
+[node name="InnerGlass" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(0.98, 0, 0, 0, 1, 0, 0, 0, 0.98, 0, 0, 0)
+mesh = SubResource("CylinderMesh_efxa6")
+
+[node name="Label3D" type="Label3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0.143883)
+text = "COINS"
+
+[node name="Body" type="StaticBody3D" parent="."]
+collision_layer = 33
+collision_mask = 7
+
+[node name="BodyCollision" type="CollisionShape3D" parent="Body"]
+transform = Transform3D(0.25, 0, 0, 0, 0.2, 0, 0, 0, 0.25, 0, 0, 0)
+shape = SubResource("CylinderShape3D_dg77c")
+
+[node name="HoverPoint" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.35068, 0)

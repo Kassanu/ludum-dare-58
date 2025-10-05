@@ -1,0 +1,9 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://btm432h0m250s"]
+
+[resource]
+transparency = 1
+metallic_specular = 0.55
+roughness = 0.06
+clearcoat_enabled = true
+clearcoat_roughness = 0.03
+refraction_enabled = true
