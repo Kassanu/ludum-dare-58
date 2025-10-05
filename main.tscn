@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://c7q3birq2wpto"]
+[gd_scene load_steps=20 format=3 uid="uid://c7q3birq2wpto"]
 
 [ext_resource type="Script" uid="uid://cdkh8m8i6vs52" path="res://player.gd" id="1_ig7tw"]
 [ext_resource type="Shader" uid="uid://buim0vs70vq8j" path="res://checker.gdshader" id="2_0xm2m"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://7t5rseg582mi" path="res://coin.tscn" id="5_7mycd"]
 [ext_resource type="Script" uid="uid://btxwfh77ltoxg" path="res://coins/library/CoinFactory.gd" id="7_5vw27"]
 [ext_resource type="Script" uid="uid://d4buv1mgxb8xo" path="res://crosshair.gd" id="7_272bh"]
+[ext_resource type="PackedScene" uid="uid://b5oprri7mwvqe" path="res://CaptureOverlay.tscn" id="7_efxa6"]
 [ext_resource type="Resource" uid="uid://lo8uc52tn3wf" path="res://coins/library/coin_library.tres" id="8_kek77"]
 [ext_resource type="PackedScene" uid="uid://cgu0ydp2ivld2" path="res://jar.tscn" id="10_4c57u"]
 
@@ -97,10 +98,10 @@ shape = SubResource("BoxShape3D_ig7tw")
 material_override = SubResource("ShaderMaterial_h2yge")
 mesh = SubResource("BoxMesh_ig7tw")
 
-[node name="CoinSpawner" type="Node3D" parent="." node_paths=PackedStringArray("factory", "table_body")]
+[node name="CoinSpawner" type="Node3D" parent="." node_paths=PackedStringArray("factory")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000980914, 1.00301, -9.62019e-05)
 script = ExtResource("4_lquwl")
 factory = NodePath("../CoinFactory")
-table_body = NodePath("../Table")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -114,6 +115,8 @@ anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("7_272bh")
+
+[node name="CaptureOverlay" parent="CanvasLayer" instance=ExtResource("7_efxa6")]
 
 [node name="CoinFactory" type="Node" parent="."]
 script = ExtResource("7_5vw27")

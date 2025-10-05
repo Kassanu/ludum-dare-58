@@ -38,6 +38,7 @@ func sample_data() -> CoinData:
 	data.collider_thickness_m = t.collider_thickness_m
 
 	data.rim_color = v.rim_color_override if (v and v.override_rim_color) else t.rim_color
+	data.face_color = v.face_color_override if (v and v.override_face_color) else t.face_color
 	data.metallic = v.metallic_override if (v and v.override_metallic) else t.metallic
 	data.roughness = v.roughness_override if (v and v.override_roughness) else t.roughness
 	var base_wear := t.wear_default

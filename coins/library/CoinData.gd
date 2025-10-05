@@ -16,6 +16,7 @@ extends Resource
 
 # Material resolved
 @export var rim_color: Color = Color(0.82, 0.84, 0.86)
+@export var face_color: Color = Color(0.82, 0.84, 0.86)
 @export var metallic: float = 0.9
 @export var roughness: float = 0.35
 @export var wear: float = 0.35

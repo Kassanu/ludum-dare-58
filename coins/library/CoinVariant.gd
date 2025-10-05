@@ -17,6 +17,8 @@ extends Resource
 # Optional material overrides
 @export var override_rim_color: bool = false
 @export var rim_color_override: Color = Color.WHITE
+@export var override_face_color: bool = false
+@export var face_color_override: Color = Color.WHITE
 @export var override_metallic: bool = false
 @export var metallic_override: float = 0.9
 @export var override_roughness: bool = false

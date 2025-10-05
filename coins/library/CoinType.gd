@@ -20,6 +20,7 @@ extends Resource
 
 # Material defaults
 @export var rim_color: Color = Color(0.82, 0.84, 0.86)
+@export var face_color: Color = Color(0.82, 0.84, 0.86)
 @export var metallic: float = 0.9
 @export var roughness: float = 0.38
 @export var wear_default: float = 0.35  # 0..1, you can randomize around this

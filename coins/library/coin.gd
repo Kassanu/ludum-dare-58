@@ -37,7 +37,7 @@ func _apply_data(d: CoinData) -> void:
 	linear_damp = 0.25
 	angular_damp = 0.30
 
-		# Build mesh and collider (you already do this)
+	# Build mesh and collider
 	var r: float = d.visual_diameter_m * 0.5
 	# (cyl, shape, etc.) unchanged…
 
@@ -49,8 +49,11 @@ func _apply_data(d: CoinData) -> void:
 
 	# Face textures / material params
 	_mat.set_shader_parameter("top_tex", d.top_tex)
+	_mat.set_shader_parameter("top_tex_enabled", d.top_tex != null)
 	_mat.set_shader_parameter("bottom_tex", d.bottom_tex)
+	_mat.set_shader_parameter("bottom_tex_enabled", d.bottom_tex != null)
 	_mat.set_shader_parameter("rim_color", d.rim_color)
+	_mat.set_shader_parameter("face_color", d.face_color)
 	_mat.set_shader_parameter("metallic", d.metallic)
 	_mat.set_shader_parameter("roughness", d.roughness)
 	_mat.set_shader_parameter("wear", d.wear)
