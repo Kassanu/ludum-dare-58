@@ -129,6 +129,13 @@ func _finalize_deposit(coin: Coin) -> void:
 	emit_signal("deposited", coin)
 	coin.queue_free()
 
+	# --- QUICK SOUND ---
+	var snd := AudioStreamPlayer3D.new()
+	snd.stream = load("res://sounds/jar_deposit.wav")
+	add_child(snd)
+	snd.play()
+	snd.connect("finished", Callable(snd, "queue_free"))
+
 func _update_label() -> void:
 	if _label:
 		_label.text = _coin_type_to_text(jar_type)
