@@ -1,17 +1,45 @@
-[gd_resource type="Resource" script_class="CoinType" load_steps=5 format=3 uid="uid://cjjgy2pe0eb7b"]
+[gd_resource type="Resource" script_class="CoinType" load_steps=9 format=3 uid="uid://cjjgy2pe0eb7b"]
 
 [ext_resource type="Texture2D" uid="uid://bjppcbrg6dmha" path="res://coins/faces/penny/regular/top_default.png" id="1_o80hv"]
 [ext_resource type="Script" uid="uid://x8h82dc6ad4m" path="res://coins/library/CoinType.gd" id="1_yskr3"]
 [ext_resource type="Script" uid="uid://dq0pm66opl7xm" path="res://coins/library/CoinVariant.gd" id="2_o80hv"]
+[ext_resource type="Script" uid="uid://c3jy37qni0lcl" path="res://coins/library/CoinFaces.gd" id="4_31nd3"]
+[ext_resource type="Texture2D" uid="uid://bjlf71e3nuq5a" path="res://coins/faces/penny/reverse/top_reverse.png" id="5_w3t3s"]
 
 [sub_resource type="Resource" id="Resource_yskr3"]
 script = ExtResource("2_o80hv")
 id = &"regular"
 display_name = "Regular"
-spawn_weight = 1.0
-years_exact = null
+spawn_weight = 98.0
+years_exact = PackedInt32Array()
 years_ranges = Array[Vector2i]([])
 faces_by_year = {}
+override_rim_color = false
+rim_color_override = Color(1, 1, 1, 1)
+override_face_color = false
+face_color_override = Color(1, 1, 1, 1)
+override_metallic = false
+metallic_override = 0.9
+override_roughness = false
+roughness_override = 0.35
+override_wear = false
+wear_override = 0.35
+metadata/_custom_type_script = "uid://dq0pm66opl7xm"
+
+[sub_resource type="Resource" id="Resource_li3pr"]
+script = ExtResource("4_31nd3")
+top = ExtResource("5_w3t3s")
+metadata/_custom_type_script = "uid://c3jy37qni0lcl"
+
+[sub_resource type="Resource" id="Resource_2smjw"]
+script = ExtResource("2_o80hv")
+id = &"penny_reverse"
+display_name = "Penny"
+spawn_weight = 2.0
+years_exact = PackedInt32Array()
+years_ranges = Array[Vector2i]([])
+faces_by_year = {}
+faces_default = SubResource("Resource_li3pr")
 override_rim_color = false
 rim_color_override = Color(1, 1, 1, 1)
 override_face_color = false
@@ -40,6 +68,6 @@ metallic = 0.9
 roughness = 0.48
 wear_default = 0.5
 default_top = ExtResource("1_o80hv")
-type_weight = 1.0
-variants = Array[ExtResource("2_o80hv")]([SubResource("Resource_yskr3")])
+type_weight = 30.0
+variants = Array[ExtResource("2_o80hv")]([SubResource("Resource_yskr3"), SubResource("Resource_2smjw")])
 metadata/_custom_type_script = "uid://x8h82dc6ad4m"
