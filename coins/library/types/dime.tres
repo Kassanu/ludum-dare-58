@@ -1,16 +1,17 @@
-[gd_resource type="Resource" script_class="CoinType" load_steps=9 format=3 uid="uid://dk0v1vndneoqd"]
+[gd_resource type="Resource" script_class="CoinType" load_steps=14 format=3 uid="uid://dk0v1vndneoqd"]
 
 [ext_resource type="Script" uid="uid://x8h82dc6ad4m" path="res://coins/library/CoinType.gd" id="1_o4x10"]
 [ext_resource type="Texture2D" uid="uid://ci26x3urc2xs2" path="res://coins/faces/dime/regular/top_default.png" id="1_pebj6"]
 [ext_resource type="Script" uid="uid://dq0pm66opl7xm" path="res://coins/library/CoinVariant.gd" id="2_pebj6"]
 [ext_resource type="Script" uid="uid://c3jy37qni0lcl" path="res://coins/library/CoinFaces.gd" id="4_r33tg"]
 [ext_resource type="Texture2D" uid="uid://dhpos1mcll6vs" path="res://coins/faces/dime/reverse/top_reverse.png" id="5_sq7d4"]
+[ext_resource type="Texture2D" uid="uid://dw4f2412fi1fm" path="res://coins/faces/dime/offset/top_offset.png" id="6_skdtp"]
 
 [sub_resource type="Resource" id="Resource_o4x10"]
 script = ExtResource("2_pebj6")
 id = &"regular"
 display_name = "Regular"
-spawn_weight = 98.0
+spawn_weight = 88.0
 years_exact = null
 years_ranges = Array[Vector2i]([])
 faces_by_year = {}
@@ -35,7 +36,7 @@ metadata/_custom_type_script = "uid://c3jy37qni0lcl"
 script = ExtResource("2_pebj6")
 id = &"reverse"
 display_name = "Dime"
-spawn_weight = 2.0
+spawn_weight = 4.0
 years_exact = null
 years_ranges = Array[Vector2i]([])
 faces_by_year = {}
@@ -50,6 +51,72 @@ override_roughness = false
 roughness_override = 0.35
 override_wear = false
 wear_override = 0.35
+metadata/_custom_type_script = "uid://dq0pm66opl7xm"
+
+[sub_resource type="Resource" id="Resource_t2xlj"]
+script = ExtResource("4_r33tg")
+top = ExtResource("6_skdtp")
+metadata/_custom_type_script = "uid://c3jy37qni0lcl"
+
+[sub_resource type="Resource" id="Resource_xr5a2"]
+script = ExtResource("2_pebj6")
+id = &"offset"
+display_name = "Dime"
+spawn_weight = 4.0
+years_exact = null
+years_ranges = Array[Vector2i]([])
+faces_by_year = {}
+faces_default = SubResource("Resource_t2xlj")
+override_rim_color = false
+rim_color_override = Color(1, 1, 1, 1)
+override_face_color = false
+face_color_override = Color(1, 1, 1, 1)
+override_metallic = false
+metallic_override = 0.9
+override_roughness = false
+roughness_override = 0.35
+override_wear = false
+wear_override = 0.35
+metadata/_custom_type_script = "uid://dq0pm66opl7xm"
+
+[sub_resource type="Resource" id="Resource_kokpq"]
+script = ExtResource("2_pebj6")
+id = &"wrong_rim"
+display_name = "Dime"
+spawn_weight = 4.0
+years_exact = null
+years_ranges = Array[Vector2i]([])
+faces_by_year = {}
+override_rim_color = true
+rim_color_override = Color(0.780392, 0.45098, 0.270588, 1)
+override_face_color = false
+face_color_override = Color(1, 1, 1, 1)
+override_metallic = false
+metallic_override = 0.9
+override_roughness = false
+roughness_override = 0.35
+override_wear = false
+wear_override = 0.35
+metadata/_custom_type_script = "uid://dq0pm66opl7xm"
+
+[sub_resource type="Resource" id="Resource_5lq56"]
+script = ExtResource("2_pebj6")
+id = &"shiny"
+display_name = "Dime"
+spawn_weight = 1.0
+years_exact = null
+years_ranges = Array[Vector2i]([])
+faces_by_year = {}
+override_rim_color = false
+rim_color_override = Color(1, 1, 1, 1)
+override_face_color = false
+face_color_override = Color(1, 1, 1, 1)
+override_metallic = false
+metallic_override = 0.9
+override_roughness = true
+roughness_override = 0.1
+override_wear = true
+wear_override = 0.1
 metadata/_custom_type_script = "uid://dq0pm66opl7xm"
 
 [resource]
@@ -69,5 +136,5 @@ roughness = 0.38
 wear_default = 0.35
 default_top = ExtResource("1_pebj6")
 type_weight = 20.0
-variants = Array[ExtResource("2_pebj6")]([SubResource("Resource_o4x10"), SubResource("Resource_skdtp")])
+variants = Array[ExtResource("2_pebj6")]([SubResource("Resource_o4x10"), SubResource("Resource_skdtp"), SubResource("Resource_xr5a2"), SubResource("Resource_kokpq"), SubResource("Resource_5lq56")])
 metadata/_custom_type_script = "uid://x8h82dc6ad4m"

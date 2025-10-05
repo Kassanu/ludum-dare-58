@@ -6,8 +6,20 @@ uniform vec3  rim_color = vec3(0.82, 0.82, 0.82);
 uniform float metallic  = 0.9;
 uniform float roughness = 0.35;
 uniform float wear      = 0.35; // 0..1
-uniform vec3  face_color = vec3(0.82, 0.82, 0.82); // opaque base on caps
-uniform bool faces_use_rim_color = false;
+
+uniform vec3  face_color = vec3(0.82, 0.82, 0.82);
+uniform bool  faces_use_rim_color = false;
+
+// NEW: independent face material controls (defaults match rim)
+uniform bool  faces_use_rim_material = true; // if true, faces use metallic/roughness/wear above
+uniform float face_metallic  = 0.9;
+uniform float face_roughness = 0.35;
+uniform float face_wear      = 0.35;
+
+// NEW: make printed ink change material response (recommended)
+uniform bool  face_ink_affects_material = true;
+uniform float face_ink_roughness_boost  = 0.20; // add to roughness under ink
+uniform float face_ink_metallic_scale   = 0.85; // multiply metallic under ink
 
 // ---------------- FACE TEXTURES ----------------
 uniform sampler2D top_tex    : source_color;
@@ -112,13 +124,18 @@ void vertex() {
     // Choose based on face
     v_cap_local = mix(local_bot, local_top, v_is_top);
 }
-
 void fragment() {
-    METALLIC  = metallic;
-    ROUGHNESS = mix(roughness, 0.6, clamp(wear, 0.0, 1.0));
+    bool is_cap = abs(v_local_ny) > 0.7071; // +/- 45°
 
-    bool is_cap = abs(v_local_ny) > 0.7071; // +/- 45° cone around +Y/-Y
     if (is_cap) {
+        // ----- FACES (caps) -----
+        float m = faces_use_rim_material ? metallic  : face_metallic;
+        float r = faces_use_rim_material ? roughness : face_roughness;
+        float w = faces_use_rim_material ? wear      : face_wear;
+
+        // Base face material before “ink” adjustments
+        float face_metal  = m;
+        float face_rough  = mix(r, 0.6, clamp(w, 0.0, 1.0)); // keep your “wear” nudge
         bool is_top = (v_is_top > 0.5);
 
         // ---- FACE: opaque base + centered planar mapping from object space ----
@@ -182,8 +199,20 @@ void fragment() {
             // Composite face ink over the opaque metal base
             out_rgb = mix(out_rgb, face_samp.rgb, cov);
 
-            ALBEDO = out_rgb;
-            ALPHA  = out_a;
+            // --- Make ink affect material so changes are visible ---
+            float ink_cov = cov; // 0..1 coverage from face texture alpha
+            float final_metal   = face_metal;
+            float final_rough   = face_rough;
+
+            if (face_ink_affects_material) {
+                final_rough = clamp(final_rough + face_ink_roughness_boost * ink_cov, 0.0, 1.0);
+                final_metal = clamp(final_metal * mix(1.0, face_ink_metallic_scale, ink_cov), 0.0, 1.0);
+            }
+
+            ALBEDO    = out_rgb;
+            ALPHA     = 1.0;
+            METALLIC  = final_metal;
+            ROUGHNESS = final_rough;
 
             // ---- DEBUG: UV ellipse ring (for overlay tuning only) ----
             if (debug_face_circle) {
@@ -279,7 +308,8 @@ void fragment() {
             }
         }
     } else {
-        // Rim / cylinder mantle
-        ALBEDO = rim_color;
+        ALBEDO    = rim_color;
+        METALLIC  = metallic;
+        ROUGHNESS = mix(roughness, 0.6, clamp(wear, 0.0, 1.0));
     }
 }

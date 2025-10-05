@@ -1,16 +1,17 @@
-[gd_resource type="Resource" script_class="CoinType" load_steps=9 format=3 uid="uid://ddy3fdeau1t5n"]
+[gd_resource type="Resource" script_class="CoinType" load_steps=14 format=3 uid="uid://ddy3fdeau1t5n"]
 
 [ext_resource type="Script" uid="uid://x8h82dc6ad4m" path="res://coins/library/CoinType.gd" id="1_40bv3"]
 [ext_resource type="Texture2D" uid="uid://defdne1qncvat" path="res://coins/faces/nickel/regular/top_default.png" id="1_f5m1s"]
 [ext_resource type="Script" uid="uid://dq0pm66opl7xm" path="res://coins/library/CoinVariant.gd" id="2_f5m1s"]
 [ext_resource type="Script" uid="uid://c3jy37qni0lcl" path="res://coins/library/CoinFaces.gd" id="4_7lylg"]
 [ext_resource type="Texture2D" uid="uid://b0f6d3i430585" path="res://coins/faces/nickel/reverse/top_reverse.png" id="5_hyl1e"]
+[ext_resource type="Texture2D" uid="uid://cw32ma01wkuju" path="res://coins/faces/nickel/offset/top_offset.png" id="6_hyl1e"]
 
 [sub_resource type="Resource" id="Resource_40bv3"]
 script = ExtResource("2_f5m1s")
 id = &"regular"
 display_name = "Regular"
-spawn_weight = 98.0
+spawn_weight = 88.0
 years_exact = null
 years_ranges = Array[Vector2i]([])
 faces_by_year = {}
@@ -35,7 +36,7 @@ metadata/_custom_type_script = "uid://c3jy37qni0lcl"
 script = ExtResource("2_f5m1s")
 id = &"reverse"
 display_name = "Nickel"
-spawn_weight = 2.0
+spawn_weight = 4.0
 years_exact = null
 years_ranges = Array[Vector2i]([])
 faces_by_year = {}
@@ -50,6 +51,72 @@ override_roughness = false
 roughness_override = 0.35
 override_wear = false
 wear_override = 0.35
+metadata/_custom_type_script = "uid://dq0pm66opl7xm"
+
+[sub_resource type="Resource" id="Resource_d3ktf"]
+script = ExtResource("4_7lylg")
+top = ExtResource("6_hyl1e")
+metadata/_custom_type_script = "uid://c3jy37qni0lcl"
+
+[sub_resource type="Resource" id="Resource_wcv4s"]
+script = ExtResource("2_f5m1s")
+id = &"offset"
+display_name = "Offset"
+spawn_weight = 4.0
+years_exact = null
+years_ranges = Array[Vector2i]([])
+faces_by_year = {}
+faces_default = SubResource("Resource_d3ktf")
+override_rim_color = false
+rim_color_override = Color(1, 1, 1, 1)
+override_face_color = false
+face_color_override = Color(1, 1, 1, 1)
+override_metallic = false
+metallic_override = 0.9
+override_roughness = false
+roughness_override = 0.35
+override_wear = false
+wear_override = 0.35
+metadata/_custom_type_script = "uid://dq0pm66opl7xm"
+
+[sub_resource type="Resource" id="Resource_hyl1e"]
+script = ExtResource("2_f5m1s")
+id = &"wrong_rim"
+display_name = "Nickel"
+spawn_weight = 4.0
+years_exact = null
+years_ranges = Array[Vector2i]([])
+faces_by_year = {}
+override_rim_color = true
+rim_color_override = Color(0.670588, 0, 0.113725, 1)
+override_face_color = false
+face_color_override = Color(1, 1, 1, 1)
+override_metallic = false
+metallic_override = 0.9
+override_roughness = false
+roughness_override = 0.35
+override_wear = false
+wear_override = 0.35
+metadata/_custom_type_script = "uid://dq0pm66opl7xm"
+
+[sub_resource type="Resource" id="Resource_svepp"]
+script = ExtResource("2_f5m1s")
+id = &"shiny"
+display_name = "Nickel"
+spawn_weight = 1.0
+years_exact = null
+years_ranges = Array[Vector2i]([])
+faces_by_year = {}
+override_rim_color = false
+rim_color_override = Color(1, 1, 1, 1)
+override_face_color = false
+face_color_override = Color(1, 1, 1, 1)
+override_metallic = false
+metallic_override = 0.9
+override_roughness = true
+roughness_override = 0.1
+override_wear = true
+wear_override = 0.1
 metadata/_custom_type_script = "uid://dq0pm66opl7xm"
 
 [resource]
@@ -69,5 +136,5 @@ roughness = 0.38
 wear_default = 0.4
 default_top = ExtResource("1_f5m1s")
 type_weight = 20.0
-variants = Array[ExtResource("2_f5m1s")]([SubResource("Resource_40bv3"), SubResource("Resource_83i4b")])
+variants = Array[ExtResource("2_f5m1s")]([SubResource("Resource_40bv3"), SubResource("Resource_83i4b"), SubResource("Resource_wcv4s"), SubResource("Resource_hyl1e"), SubResource("Resource_svepp")])
 metadata/_custom_type_script = "uid://x8h82dc6ad4m"
