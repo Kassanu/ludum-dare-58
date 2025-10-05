@@ -34,7 +34,7 @@ metadata/_custom_type_script = "uid://c3jy37qni0lcl"
 
 [sub_resource type="Resource" id="Resource_2smjw"]
 script = ExtResource("2_o80hv")
-id = &"penny_reverse"
+id = &"reverse"
 display_name = "Penny"
 spawn_weight = 4.0
 years_exact = PackedInt32Array()
