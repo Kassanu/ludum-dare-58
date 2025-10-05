@@ -31,6 +31,8 @@ class_name VariantShelf
 
 signal updated_progress(collected_count: int, total: int)
 
+const SND_SHELF := preload("res://sounds/shelf_deposit.wav")
+
 var _slots_root: Node3D
 var _slot_nodes: Array[Label3D] = []
 var _collected_by_type: Dictionary = {} # CoinVariants.Type -> bool
@@ -123,6 +125,19 @@ func try_deposit(coin: Coin) -> bool:
 	emit_signal("deposited", coin)
 	_on_accept(coin) # Bank default: queue_free
 	return true
+
+func _on_accept(coin: Coin) -> void:
+	# play a quick one-shot at the shelf's position
+	var s := AudioStreamPlayer3D.new()
+	s.stream = SND_SHELF
+	# Optional tiny variation so repeated deposits don't sound identical:
+	s.pitch_scale = randf_range(0.97, 1.03)
+	add_child(s)
+	s.play()
+	s.connect("finished", Callable(s, "queue_free"))
+
+	# keep the original behavior (remove the coin)
+	coin.queue_free()
 
 # ---- Variant extraction (works with your Coin/CoinData) ----
 func _get_variant_id(coin: Coin) -> StringName:

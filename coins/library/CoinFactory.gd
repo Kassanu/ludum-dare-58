@@ -4,17 +4,17 @@ class_name CoinFactory
 @export var library: CoinLibrary
 @export var coin_scene: PackedScene
 
-# Mass scaling reference (choose your "baseline")
 @export var base_mass: float = 0.02
 @export var base_diameter_m: float = 0.026
 @export var base_thickness_m: float = 0.003
 
+const SND_RARE := preload("res://sounds/rare_spawn.wav")
+
 var _rng := RandomNumberGenerator.new()
+var _rare_sfx_cooldown := false
 
 func set_seed(seed: int) -> void:
 	_rng.seed = seed
-
-# --- Public API ---
 
 func sample_data() -> CoinData:
 	assert(library and library.types.size() > 0)
@@ -44,16 +44,13 @@ func sample_data() -> CoinData:
 	var base_wear := t.wear_default
 	if v and v.override_wear:
 		base_wear = v.wear_override
-	# small random wear variation
 	data.wear = clamp(base_wear + (_rng.randf() - 0.5) * 0.2, 0.0, 1.0)
 
 	data.top_tex = faces.top
 	data.bottom_tex = faces.bottom
 
-	# Mass scale by relative volume (d^2 * t)
 	var vol_scale : float = (t.visual_diameter_m * t.visual_diameter_m * t.visual_thickness_m) / max(1e-6, base_diameter_m * base_diameter_m * base_thickness_m)
-	data.mass = base_mass * vol_scale
-	data.mass = clamp(data.mass, 0.0015, 0.0200)
+	data.mass = clamp(base_mass * vol_scale, 0.0015, 0.0200)
 
 	return data
 
@@ -62,16 +59,35 @@ func instance_from_data(data: CoinData) -> RigidBody3D:
 	var node := coin_scene.instantiate() as RigidBody3D
 	var body := node as Coin
 	if body == null:
-		# If your scene uses a different script name, just call a method by hand:
 		if node.has_method("configure_from_data"):
 			node.call("configure_from_data", data)
 		else:
 			push_error("coin_scene root must have configure_from_data(data: CoinData)")
 	else:
 		body.configure_from_data(data)
+
+	# --- play subtle rare spawn sfx if variant isn't regular ---
+	if data.is_special:
+		_play_rare_spawn_sfx()
+
 	return node
 
 # --- Internals ---
+
+func _play_rare_spawn_sfx() -> void:
+	# Avoid spam when dumping many coins at once.
+	if _rare_sfx_cooldown:
+		return
+	_rare_sfx_cooldown = true
+	get_tree().create_timer(0.08).timeout.connect(func(): _rare_sfx_cooldown = false)
+
+	var s := AudioStreamPlayer3D.new()
+	s.stream = SND_RARE
+	s.volume_db = -46.0
+	s.pitch_scale = randf_range(0.98, 1.02)
+	add_child(s)  # attach to factory so it plays immediately (even before coin is added to tree)
+	s.play()
+	s.connect("finished", Callable(s, "queue_free"))
 
 func _pick_type() -> CoinType:
 	var total := 0.0
@@ -79,27 +95,23 @@ func _pick_type() -> CoinType:
 	var r := _rng.randf() * total
 	for t in library.types:
 		r -= max(t.type_weight, 0.0)
-		if r <= 0.0:
-			return t
+		if r <= 0.0: return t
 	return library.types[0]
 
 func _pick_variant(t: CoinType) -> CoinVariant:
-	if t.variants.is_empty():
-		return null
+	if t.variants.is_empty(): return null
 	var total := 0.0
 	for v in t.variants: total += max(v.spawn_weight, 0.0)
 	var r := _rng.randf() * total
 	for v in t.variants:
 		r -= max(v.spawn_weight, 0.0)
-		if r <= 0.0:
-			return v
+		if r <= 0.0: return v
 	return t.variants[0]
 
 func _pick_year(t: CoinType, v: CoinVariant) -> int:
 	var y0 := t.year_min
 	var y1 := t.year_max
 	if v:
-		# Build a list from variant constraints if present
 		if v.years_exact.size() > 0:
 			return v.years_exact[_rng.randi() % v.years_exact.size()]
 		if v.years_ranges.size() > 0:
@@ -108,13 +120,11 @@ func _pick_year(t: CoinType, v: CoinVariant) -> int:
 	return _rng.randi_range(y0, y1)
 
 func _resolve_faces(t: CoinType, v: CoinVariant, year: int) -> CoinFaces:
-	# Try variant per-year, then variant default, then type default
 	if v:
 		if v.faces_by_year.has(year):
 			return v.faces_by_year[year]
 		if v.faces_default:
 			return v.faces_default
-	# Build a minimal faces resource from type defaults if needed
 	var f := CoinFaces.new()
 	f.top = t.default_top
 	f.bottom = t.default_bottom
