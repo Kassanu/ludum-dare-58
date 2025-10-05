@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://c7q3birq2wpto"]
+[gd_scene load_steps=36 format=3 uid="uid://c7q3birq2wpto"]
 
 [ext_resource type="Script" uid="uid://cdkh8m8i6vs52" path="res://player.gd" id="1_ig7tw"]
 [ext_resource type="Script" uid="uid://dtd0l6l6geh1p" path="res://grab_and_inspect.gd" id="2_7mycd"]
@@ -14,6 +14,7 @@
 [ext_resource type="Resource" uid="uid://lo8uc52tn3wf" path="res://coins/library/coin_library.tres" id="8_kek77"]
 [ext_resource type="PackedScene" uid="uid://cgu0ydp2ivld2" path="res://jar.tscn" id="10_4c57u"]
 [ext_resource type="Script" uid="uid://qgv5tffjjwa" path="res://CoinBag.gd" id="14_w48qg"]
+[ext_resource type="PackedScene" uid="uid://e7suk8owwd7u" path="res://variant_shelf.tscn" id="15_vivmo"]
 
 [sub_resource type="Environment" id="Environment_ig7tw"]
 background_mode = 2
@@ -194,7 +195,7 @@ mesh = SubResource("BoxMesh_w48qg")
 surface_material_override/0 = SubResource("StandardMaterial3D_cegan")
 
 [node name="wall3" type="StaticBody3D" parent="Walls"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.0157557, 1.1, -2.73424)
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.0157557, 1.1, -1.58449)
 collision_mask = 6
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/wall3"]
@@ -230,7 +231,7 @@ mesh = SubResource("BoxMesh_ig7tw")
 surface_material_override/0 = SubResource("StandardMaterial3D_w48qg")
 
 [node name="CoinSpawner" type="Node3D" parent="." node_paths=PackedStringArray("factory")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000980914, 1.00301, 0.0658439)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000980914, 1.00301, 0.133826)
 script = ExtResource("4_lquwl")
 factory = NodePath("../CoinFactory")
 
@@ -290,3 +291,29 @@ surface_material_override/0 = SubResource("StandardMaterial3D_82xsv")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="CoinBag"]
 shape = SubResource("SphereShape3D_getpj")
+
+[node name="Shelves" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.14975)
+
+[node name="PennyShelf" parent="Shelves" instance=ExtResource("15_vivmo")]
+transform = Transform3D(0.75, 0, 0, 0, 0.75, 0, 0, 0, 1, -1.98779, 1.30143, -2.4379)
+
+[node name="NickelShelf" parent="Shelves" instance=ExtResource("15_vivmo")]
+transform = Transform3D(0.75, 0, 0, 0, 0.75, 0, 0, 0, 1, -1.19563, 1.30143, -2.4379)
+coin_type = 1
+
+[node name="DimeShelf" parent="Shelves" instance=ExtResource("15_vivmo")]
+transform = Transform3D(0.75, 0, 0, 0, 0.75, 0, 0, 0, 1, -0.396883, 1.30143, -2.4379)
+coin_type = 2
+
+[node name="QuarterShelf" parent="Shelves" instance=ExtResource("15_vivmo")]
+transform = Transform3D(0.75, 0, 0, 0, 0.75, 0, 0, 0, 1, 0.39505, 1.30143, -2.43781)
+coin_type = 3
+
+[node name="HalfDollarShelf" parent="Shelves" instance=ExtResource("15_vivmo")]
+transform = Transform3D(0.75, 0, 0, 0, 0.75, 0, 0, 0, 1, 1.1718, 1.30143, -2.43781)
+coin_type = 4
+
+[node name="DollarShelf" parent="Shelves" instance=ExtResource("15_vivmo")]
+transform = Transform3D(0.75, 0, 0, 0, 0.75, 0, 0, 0, 1, 1.96106, 1.30143, -2.43781)
+coin_type = 5

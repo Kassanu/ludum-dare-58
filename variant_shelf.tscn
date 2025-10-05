@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://e7suk8owwd7u"]
+
+[ext_resource type="Script" uid="uid://dj0ccp7a2rnu3" path="res://VariantShelf.gd" id="1_rgbsk"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_vivmo"]
+size = Vector3(1, 1.2, 0.05)
+
+[sub_resource type="QuadMesh" id="QuadMesh_yaehf"]
+size = Vector2(1, 1.2)
+
+[node name="VariantShelf" type="Node3D"]
+script = ExtResource("1_rgbsk")
+
+[node name="Body" type="StaticBody3D" parent="."]
+collision_layer = 33
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Body"]
+shape = SubResource("BoxShape3D_vivmo")
+
+[node name="BoardMesh" type="MeshInstance3D" parent="."]
+mesh = SubResource("QuadMesh_yaehf")

@@ -63,15 +63,12 @@ func _unhandled_input(event: InputEvent) -> void:
 			if ray and ray.is_colliding():
 				var hit := ray.get_collider()
 				if hit and hit.is_in_group(bag_group):
-					# Try to trigger the bag; if it succeeds, consume the click.
 					if hit.has_method("try_dump") and hit.try_dump():
 						return
-					# Optional: play a deny/cooldown sound here and return if you
-					# don't want this click to fall through to coin grab.
-					# return
 			# No bag (or bag didn’t handle) -> normal grab
 			_try_grab()
 		else:
+			# Try deposit to VariantShelf / JarBank (anything that extends Bank)
 			if not _try_deposit_held():
 				_drop()
 
@@ -85,7 +82,6 @@ func _unhandled_input(event: InputEvent) -> void:
 			hold_distance -= 0.05
 		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
 			hold_distance += 0.05
-		# Apply clamp only if clamp is active; otherwise allow out-of-range values
 		if _clamp_active:
 			hold_distance = clamp(hold_distance, min_hold_distance, max_hold_distance)
 
@@ -130,7 +126,6 @@ func _physics_process(dt: float) -> void:
 		if to_target.length() <= max_step:
 			step = to_target
 		else:
-			# combine gentle lerp with a hard cap for stability
 			var lerped := to_target * pos_lerp
 			if lerped.length() > max_step:
 				step = to_target.normalized() * max_step
@@ -208,9 +203,7 @@ func _try_grab() -> void:
 	# OPTIONAL: while held, avoid colliding with other coins to prevent pile pops
 	_prev_collision_layer = grabbed.collision_layer
 	_prev_collision_mask  = grabbed.collision_mask
-	# Uncomment to collide with world (layer 1) only while held:
-	# grabbed.collision_layer = 4            # still "a coin"
-	# grabbed.collision_mask  = 1            # world only (no coins)
+	# (left as-is; you can enable the world-only collision mask here if needed)
 
 	# Initialize rotation smoothing target to current orientation
 	_desired_basis = grabbed.global_transform.basis.orthonormalized()
@@ -252,6 +245,7 @@ func _try_deposit_held() -> bool:
 	if not is_instance_valid(hit):
 		return false
 
+	# Find a Bank (VariantShelf / JarBank) on the collider or its parents
 	var bank := _find_bank_on_node_or_parents(hit)
 	if deposit_debug:
 		print("[Deposit] Bank found? ", bank, " has try_deposit? ", bank and bank.has_method("try_deposit"))
@@ -259,18 +253,17 @@ func _try_deposit_held() -> bool:
 	if bank == null or not bank.has_method("try_deposit"):
 		return false
 
-	var coin := grabbed as Node
-	if coin and not (coin is Coin):
-		coin = grabbed as Coin
+	# Pass the held coin along
+	var coin := grabbed as Coin
 	if coin == null:
-		if deposit_debug: print("[Deposit] WARNING: grabbed is not Coin (", grabbed, ")")
-		coin = grabbed
+		coin = grabbed  # still passes the node; VariantShelf is tolerant
 
 	var ok := bank.try_deposit(coin)
 	if deposit_debug:
 		print("[Deposit] try_deposit -> ", ok)
 
 	if ok:
+		# Do NOT call _drop(); the coin is likely queue_freed by the bank.
 		grabbed = null
 		_rotating = false
 		_set_look_lock(false)
@@ -281,7 +274,10 @@ func _try_deposit_held() -> bool:
 func _find_bank_on_node_or_parents(n: Object) -> Bank:
 	var cur := n as Node
 	while cur:
-		if cur.has_method("try_deposit") or cur.is_in_group("bank"):
+		if cur is Bank:
+			return cur
+		# (optional) also allow "bank" group tagging if you want
+		if cur.is_in_group("bank") and cur.has_method("try_deposit"):
 			return cur
 		cur = cur.get_parent()
 	return null

@@ -23,3 +23,13 @@ static func to_id(t: Type) -> StringName:
 		Type.HALFDOLLAR: return &"half_dollar"
 		Type.DOLLAR:     return &"dollar"
 		_:               return &"penny"
+
+static func to_name(t: Type) -> String:
+	match t:
+		Type.PENNY:      return "Penny"
+		Type.NICKEL:     return "Nickel"
+		Type.DIME:       return "Dime"
+		Type.QUARTER:    return "Quarter"
+		Type.HALFDOLLAR: return "Half Dollar"
+		Type.DOLLAR:     return "Dollar"
+		_:               return "Coins"
