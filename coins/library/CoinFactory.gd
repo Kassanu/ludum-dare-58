@@ -53,6 +53,7 @@ func sample_data() -> CoinData:
 	# Mass scale by relative volume (d^2 * t)
 	var vol_scale : float = (t.visual_diameter_m * t.visual_diameter_m * t.visual_thickness_m) / max(1e-6, base_diameter_m * base_diameter_m * base_thickness_m)
 	data.mass = base_mass * vol_scale
+	data.mass = clamp(data.mass, 0.0015, 0.0200)
 
 	return data
 

@@ -92,6 +92,7 @@ light_indirect_energy = 1.295
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00317025, 0.910002, 1.75005)
 collision_layer = 2
 script = ExtResource("1_ig7tw")
+speed = 1.25
 
 [node name="Camera3D" type="Camera3D" parent="Player" node_paths=PackedStringArray("camera", "ray", "crosshair", "player_node", "deposit_ray")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.19209e-07, 0.404659, 0)
@@ -102,6 +103,9 @@ ray = NodePath("GrabRay")
 crosshair = NodePath("../../CanvasLayer/Crosshair")
 player_node = NodePath("..")
 deposit_ray = NodePath("DepositRay")
+hold_distance = 0.2
+max_hold_distance = 0.4
+max_hold_move_speed_mps = 2.4
 
 [node name="GrabRay" type="RayCast3D" parent="Player/Camera3D"]
 target_position = Vector3(0, 0, -2)

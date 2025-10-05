@@ -65,8 +65,8 @@ func _apply_data(d: CoinData) -> void:
 
 	# ---------- Mass / damping ----------
 	mass = d.mass
-	linear_damp = 0.25
-	angular_damp = 0.30
+	linear_damp = 0.35  # was 0.25
+	angular_damp = 0.45 # was 0.30
 
 	# ---------- Visual mesh sizing ----------
 	var vis_mesh := mesh_inst.mesh
@@ -87,8 +87,14 @@ func _apply_data(d: CoinData) -> void:
 	# ---------- Collider sizing ----------
 	if col.shape is CylinderShape3D:
 		var c := col.shape as CylinderShape3D
-		c.radius = d.visual_diameter_m * 0.5
-		c.height = d.collider_thickness_m if (d.collider_thickness_m > 0.0) else d.visual_thickness_m
+		var vis_radius := d.visual_diameter_m * 0.5
+		var vis_height := d.visual_thickness_m
+
+		# Minimum collision thickness (in meters) to keep the solver stable
+		const MIN_COLLIDER_HEIGHT := 0.0025  # 2.5 mm feels good
+		var target_height := d.collider_thickness_m if d.collider_thickness_m > 0.0 else vis_height
+		c.radius = vis_radius
+		c.height = max(target_height, MIN_COLLIDER_HEIGHT)
 		col.shape = c
 	else:
 		push_warning("Coin collider is not CylinderShape3D; physics size may not match visuals.")
@@ -176,6 +182,11 @@ func on_picked_up():
 func on_dropped():
 	is_held = false
 	freeze = false
+	linear_velocity = Vector3.ZERO
+	angular_velocity = Vector3.ZERO
+
+	# Small upward nudge to avoid immediate deep intersections
+	global_position.y += 0.002
 	apply_central_impulse(Vector3.ZERO)
 
 func coin_type_id() -> CoinTypes.Type:
