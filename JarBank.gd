@@ -5,6 +5,7 @@ class_name JarBank
 @export var hover_point_path: NodePath = ^"HoverPoint"
 @export var body_path: NodePath = ^"Body"   # StaticBody3D, used only for layer reference
 @export var label_path: NodePath = ^"Visual/Label3D"
+@export var count_label_path: NodePath = ^"Visual/CountLabel"
 
 # Animation feel
 @export var fly_time: float = 0.18          # seconds to move to hover point
@@ -19,6 +20,7 @@ var count := 0
 @onready var _hover_pt: Node3D = get_node_or_null(hover_point_path)
 @onready var _body: StaticBody3D = get_node_or_null(body_path)
 @onready var _label: Label3D = get_node_or_null(label_path)
+@onready var _count_label: Label3D = get_node_or_null(count_label_path)
 
 func _ready() -> void:
 	_update_label()
@@ -123,12 +125,17 @@ func _finalize_deposit(coin: Coin) -> void:
 
 	coin.set_meta("pending_deposit", null)
 	count += 1
+	_update_count_label()
 	emit_signal("deposited", coin)
 	coin.queue_free()
 
 func _update_label() -> void:
 	if _label:
 		_label.text = _coin_type_to_text(jar_type)
+
+func _update_count_label() -> void:
+	if _count_label:
+		_count_label.text = str(count)
 
 func _coin_type_to_text(t: CoinTypes.Type) -> String:
 	match t:

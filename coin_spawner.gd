@@ -1,6 +1,7 @@
-# res://coin_spawner.gd
+class_name CoinSpawner
 extends Node3D
 
+signal spawn_started(count: int)
 signal finished()
 
 @export var factory: CoinFactory           # drag your CoinFactory here
@@ -51,6 +52,7 @@ func start(total: int = -1) -> void:
 	else:
 		_remaining = coins_total
 	_active = true
+	emit_signal("spawn_started", _remaining)
 	_spawn_loop()
 
 # Public: cancel an in-progress dump

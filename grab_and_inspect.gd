@@ -2,8 +2,11 @@ extends Camera3D
 
 @export var camera: Camera3D
 @export var ray: RayCast3D
-@export var crosshair: Control             # optional
-@export var player_node: Node              # drag your Player node here
+@export var crosshair: Control
+@export var player_node: Node
+
+@export var bag_group: StringName = &"coin_bag"
+@export var interact_action: StringName = &"mouse_left"
 
 @export var deposit_ray: RayCast3D
 @export var deposit_debug: bool = false
@@ -56,6 +59,17 @@ func _unhandled_input(event: InputEvent) -> void:
 	# LMB: grab OR (when holding) deposit-or-drop
 	if event.is_action_pressed("grab"):
 		if grabbed == null:
+			# --- BAG-FIRST CHECK ---
+			if ray and ray.is_colliding():
+				var hit := ray.get_collider()
+				if hit and hit.is_in_group(bag_group):
+					# Try to trigger the bag; if it succeeds, consume the click.
+					if hit.has_method("try_dump") and hit.try_dump():
+						return
+					# Optional: play a deny/cooldown sound here and return if you
+					# don't want this click to fall through to coin grab.
+					# return
+			# No bag (or bag didn’t handle) -> normal grab
 			_try_grab()
 		else:
 			if not _try_deposit_held():
@@ -99,6 +113,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		var up_axis: Vector3 = camera.global_transform.basis.y
 		var right_axis: Vector3 = camera.global_transform.basis.x
 		_desired_basis = (Basis(up_axis, yaw) * Basis(right_axis, pitch) * _desired_basis).orthonormalized()
+
 
 func _physics_process(dt: float) -> void:
 	_update_hover()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://c7q3birq2wpto"]
+[gd_scene load_steps=35 format=3 uid="uid://c7q3birq2wpto"]
 
 [ext_resource type="Script" uid="uid://cdkh8m8i6vs52" path="res://player.gd" id="1_ig7tw"]
 [ext_resource type="Script" uid="uid://dtd0l6l6geh1p" path="res://grab_and_inspect.gd" id="2_7mycd"]
@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://b5oprri7mwvqe" path="res://CaptureOverlay.tscn" id="7_efxa6"]
 [ext_resource type="Resource" uid="uid://lo8uc52tn3wf" path="res://coins/library/coin_library.tres" id="8_kek77"]
 [ext_resource type="PackedScene" uid="uid://cgu0ydp2ivld2" path="res://jar.tscn" id="10_4c57u"]
+[ext_resource type="Script" uid="uid://qgv5tffjjwa" path="res://CoinBag.gd" id="14_w48qg"]
 
 [sub_resource type="Environment" id="Environment_ig7tw"]
 background_mode = 2
@@ -78,6 +79,14 @@ albedo_texture = ExtResource("4_dg77c")
 normal_enabled = true
 normal_texture = ExtResource("5_ycdy4")
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_82xsv"]
+albedo_color = Color(0.491247, 0.235488, 0.115071, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_vivmo"]
+material = SubResource("StandardMaterial3D_82xsv")
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_getpj"]
+
 [node name="Node3D" type="Node3D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -109,7 +118,7 @@ max_hold_move_speed_mps = 2.4
 
 [node name="GrabRay" type="RayCast3D" parent="Player/Camera3D"]
 target_position = Vector3(0, 0, -2)
-collision_mask = 4
+collision_mask = 20
 
 [node name="DepositRay" type="RayCast3D" parent="Player/Camera3D"]
 target_position = Vector3(0, 0, -3)
@@ -268,3 +277,16 @@ jar_type = 4
 [node name="DollarJar" parent="." instance=ExtResource("10_4c57u")]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0.4268, 0.855966, -0.186253)
 jar_type = 5
+
+[node name="CoinBag" type="StaticBody3D" parent="." groups=["coin_bag"]]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0.448333, 0.797978, 0.261079)
+collision_layer = 17
+script = ExtResource("14_w48qg")
+spawner_path = NodePath("../CoinSpawner")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CoinBag"]
+mesh = SubResource("SphereMesh_vivmo")
+surface_material_override/0 = SubResource("StandardMaterial3D_82xsv")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CoinBag"]
+shape = SubResource("SphereShape3D_getpj")

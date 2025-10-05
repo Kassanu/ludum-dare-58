@@ -1,6 +1,5 @@
-[gd_resource type="Resource" script_class="CoinType" load_steps=6 format=3 uid="uid://c4m74vnumdivs"]
+[gd_resource type="Resource" script_class="CoinType" load_steps=5 format=3 uid="uid://c4m74vnumdivs"]
 
-[ext_resource type="Texture2D" uid="uid://bng57k2uodoox" path="res://coins/faces/quarter/regular/bottom_default.png" id="1_17cth"]
 [ext_resource type="Script" uid="uid://x8h82dc6ad4m" path="res://coins/library/CoinType.gd" id="1_fg8i5"]
 [ext_resource type="Texture2D" uid="uid://bat61qt5wk2h0" path="res://coins/faces/quarter/regular/top_default.png" id="2_jwkop"]
 [ext_resource type="Script" uid="uid://dq0pm66opl7xm" path="res://coins/library/CoinVariant.gd" id="2_o103j"]
@@ -41,7 +40,6 @@ metallic = 0.9
 roughness = 0.35
 wear_default = 0.35
 default_top = ExtResource("2_jwkop")
-default_bottom = ExtResource("1_17cth")
 type_weight = 1.0
 variants = Array[ExtResource("2_o103j")]([SubResource("Resource_fg8i5")])
 metadata/_custom_type_script = "uid://x8h82dc6ad4m"

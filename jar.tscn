@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://cgu0ydp2ivld2"]
+[gd_scene load_steps=7 format=3 uid="uid://cgu0ydp2ivld2"]
 
 [ext_resource type="Script" uid="uid://bif3ejgcrix2s" path="res://JarBank.gd" id="1_8fgap"]
 [ext_resource type="Material" uid="uid://6o562mhnrccp" path="res://inner_glass.tres" id="2_amr17"]
@@ -7,11 +7,27 @@
 material = ExtResource("2_amr17")
 cap_top = false
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_amr17"]
+transparency = 1
+cull_mode = 1
+albedo_color = Color(1, 1, 1, 0.774)
+metallic_specular = 0.55
+roughness = 0.06
+clearcoat_enabled = true
+clearcoat_roughness = 0.03
+refraction_enabled = true
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_w3fd0"]
+material = SubResource("StandardMaterial3D_amr17")
+cap_top = false
+cap_bottom = false
+
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_dg77c"]
 
 [node name="SingleTypeBank" type="Node3D" groups=["bank"]]
 script = ExtResource("1_8fgap")
 label_path = NodePath("Label3D")
+count_label_path = NodePath("CountLabel")
 
 [node name="Visual" type="Node3D" parent="."]
 transform = Transform3D(0.25, 0, 0, 0, 0.2, 0, 0, 0, 0.25, 0, 0, 0)
@@ -21,11 +37,15 @@ mesh = SubResource("CylinderMesh_efxa6")
 
 [node name="InnerGlass" type="MeshInstance3D" parent="Visual"]
 transform = Transform3D(0.98, 0, 0, 0, 1, 0, 0, 0, 0.98, 0, 0, 0)
-mesh = SubResource("CylinderMesh_efxa6")
+mesh = SubResource("CylinderMesh_w3fd0")
 
 [node name="Label3D" type="Label3D" parent="."]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0.143883)
 text = "COINS"
+
+[node name="CountLabel" type="Label3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, -0.07144, 0.143883)
+text = "0"
 
 [node name="Body" type="StaticBody3D" parent="."]
 collision_layer = 33

@@ -50,8 +50,7 @@ func _process(_dt: float) -> void:
 
 func _input(event: InputEvent) -> void:
     # Release if we *do* see Esc/F1 (desktop/editor; sometimes web).
-    if event.is_action_pressed(&"mouse_capture_toggle") \
-    or event.is_action_pressed(&"mouse_capture_release_alt"):
+    if event.is_action_pressed(&"mouse_capture_toggle"):
         release()
         return
 

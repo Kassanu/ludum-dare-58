@@ -1,6 +1,7 @@
-[gd_resource type="Resource" script_class="CoinType" load_steps=4 format=3 uid="uid://cs3ewhxi65khi"]
+[gd_resource type="Resource" script_class="CoinType" load_steps=5 format=3 uid="uid://cs3ewhxi65khi"]
 
 [ext_resource type="Script" uid="uid://x8h82dc6ad4m" path="res://coins/library/CoinType.gd" id="1_w346v"]
+[ext_resource type="Texture2D" uid="uid://cms21n4nsfu13" path="res://coins/faces/half_dollar/regular/top_default.png" id="1_y8wye"]
 [ext_resource type="Script" uid="uid://dq0pm66opl7xm" path="res://coins/library/CoinVariant.gd" id="2_y8wye"]
 
 [sub_resource type="Resource" id="Resource_w346v"]
@@ -38,6 +39,7 @@ face_color = Color(0.8, 0.819608, 0.839216, 1)
 metallic = 0.9
 roughness = 0.33
 wear_default = 0.35
+default_top = ExtResource("1_y8wye")
 type_weight = 1.0
 variants = Array[ExtResource("2_y8wye")]([SubResource("Resource_w346v")])
 metadata/_custom_type_script = "uid://x8h82dc6ad4m"

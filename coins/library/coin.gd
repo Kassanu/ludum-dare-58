@@ -152,8 +152,7 @@ func _apply_data(d: CoinData) -> void:
 		_mat.set_shader_parameter("debug_overlay_box", false)
 		_mat.set_shader_parameter("debug_overlay_fill", false)
 
-	# ---- Quick debug so you can verify per-coin sizes in console ----
-	print("Coin ", d.type_name, " -> diameter=", d.visual_diameter_m, "m thickness=", d.visual_thickness_m, "m")
+	#print("Coin ", d.type_name, " -> diameter=", d.visual_diameter_m, "m thickness=", d.visual_thickness_m, "m")
 
 func _apply_overlay_by_type(type_id: CoinTypes.Type, mat: ShaderMaterial) -> void:
 	var size := Vector2(0.34, 0.12)

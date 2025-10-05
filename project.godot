@@ -24,6 +24,7 @@ MouseCapture="*res://core/MouseCapture.gd"
 
 coin=""
 bank=""
+coin_bag=""
 
 [input]
 
